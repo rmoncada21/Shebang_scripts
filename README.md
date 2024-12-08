@@ -30,6 +30,9 @@ Una *shell* es un programa que permite al usuario interactuar con el sistema ope
   - **csh**, **ksh**, entre otras.
 - **Modo de operación**: Puede usarse de forma interactiva (introduciendo comandos manualmente) o ejecutando scripts.
 
+- **Tipo de shell:**
+  - > echo $SHELL 
+
 ---
 
 ### **2. Bash**
@@ -38,7 +41,8 @@ Una *shell* es un programa que permite al usuario interactuar con el sistema ope
 - **Características**:
   - Compatible con scripts de shell antiguos (es una mejora de la shell original Bourne Shell).
   - Soporta características como el historial de comandos, alias, autocompletado y funciones de scripting avanzadas.
-
+- Versión de bash
+  - > bash --version
 ---
 
 ### **3. Script**
