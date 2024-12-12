@@ -46,4 +46,10 @@ echo
 _print_arreglo_asociativo asociativo
 # echo "${asociativo[@]}"
 
+# TODO: implement function logic to remove whitespaces from string
 # Función para quitar los espacios en blanco dentro de los arreglos
+function _remove_whitespace(){
+    local -n local_arreglo="$1"
+}
+
+resultado=$(_remove_whitespace arreglo)
