@@ -67,5 +67,18 @@ function _arreglo_print_string() {
     done
 }
 
+echo "funcion _arreglo_print "
+_arreglo_print 
+
+echo "funcion _arreglo_print2 "
+_arreglo_print2
+
+echo "funcion _arreglo_print3 "
+_arreglo_print3 "${sarreglo[@]}"
+
+echo "funcion _arreglo_print4 "
+_arreglo_print4 sarreglo
+
 # Llamada a _arreglo_print_string pasando iarreglo como cadena
+echo "funcion _arreglo_print_string "
 _arreglo_print_string "${iarreglo[*]}"  # Convierte iarreglo a cadena para pasarlo
