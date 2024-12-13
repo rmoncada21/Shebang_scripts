@@ -1,7 +1,7 @@
 #!/bin/bash
 
-filas=10
-columnas=10
+filas=63
+columnas=100
 
 # Usando arreglos asociativos
 arreglo=()
@@ -13,11 +13,12 @@ function _llenar_arreglo(){
     local -n local_arreglo="$1"
 
     for ((i=0; i<$columnas; i++)); do
-        local_arreglo[$i]="-"
+        local_arreglo[$i]="_"
     done
 }
 
 # Imprimir "arreglo"
+echo "Imprimir arreglo"
 _llenar_arreglo arreglo
 echo "${arreglo[*]}"
 
@@ -41,15 +42,26 @@ function _print_arreglo_asociativo(){
 }
 
 # Imprimir "arreglo_asociativo"
+echo "Sección de arreglos asociativos"
 _llenar_arreglo_asociativo asociativo arreglo
 echo
 _print_arreglo_asociativo asociativo
-# echo "${asociativo[@]}"
 
-# TODO: implement function logic to remove whitespaces from string
+
 # Función para quitar los espacios en blanco dentro de los arreglos
 function _remove_whitespace(){
-    local -n local_arreglo="$1"
+    local -n local_arreglo_aso="$1"
+
+    for item in "${!local_arreglo_aso[@]}"; do
+        # acceder al arreglo temporal
+        nueva_linea=$(echo "${local_arreglo_aso[$item]}" | sed 's/ //g')
+        echo "$nueva_linea"
+    done
 }
 
-resultado=$(_remove_whitespace arreglo)
+_remove_whitespace asociativo
+
+# TODO: implement function logic to make a tree pattern
+function _tree_pattern(){
+    local -n local_arreglo_aso="$1"
+}
