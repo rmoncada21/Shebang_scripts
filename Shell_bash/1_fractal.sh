@@ -8,7 +8,7 @@ arreglo=()
 asociativo=()
 
 # Funcion para llenar arreglos 
-function _llenar_arreglo(){
+function llenar_arreglo(){
     # pasar arreglo por referencia para poder modificarlo
     local -n local_arreglo="$1"
 
@@ -19,11 +19,11 @@ function _llenar_arreglo(){
 
 # Imprimir "arreglo"
 echo "Imprimir arreglo"
-_llenar_arreglo arreglo
+llenar_arreglo arreglo
 echo "${arreglo[*]}"
 
 # Función para llenar el arreglo asociativo
-function _llenar_arreglo_asociativo(){
+function llenar_arreglo_asociativo(){
     local -n local_arreglo_aso="$1"
     local -n local_arreglo="$2"
 
@@ -33,7 +33,7 @@ function _llenar_arreglo_asociativo(){
 }
 
 # Función para imprimir el arreglo asocitivo
-function _print_arreglo_asociativo(){
+function print_arreglo_asociativo(){
     local -n local_arreglo_aso="$1"
 
     for item in "${local_arreglo_aso[@]}"; do
@@ -43,25 +43,27 @@ function _print_arreglo_asociativo(){
 
 # Imprimir "arreglo_asociativo"
 echo "Sección de arreglos asociativos"
-_llenar_arreglo_asociativo asociativo arreglo
+llenar_arreglo_asociativo asociativo arreglo
 echo
-_print_arreglo_asociativo asociativo
+print_arreglo_asociativo asociativo
 
 
 # Función para quitar los espacios en blanco dentro de los arreglos
-function _remove_whitespace(){
+function remove_whitespace(){
     local -n local_arreglo_aso="$1"
 
     for item in "${!local_arreglo_aso[@]}"; do
         # acceder al arreglo temporal
         nueva_linea=$(echo "${local_arreglo_aso[$item]}" | sed 's/ //g')
-        echo "$nueva_linea"
+        # echo "$nueva_linea"
     done
 }
 
-_remove_whitespace asociativo
+remove_whitespace asociativo
+print_arreglo_asociativo asociatio
 
 # TODO: implement function logic to make a tree pattern
-function _tree_pattern(){
+function tree_pattern(){
     local -n local_arreglo_aso="$1"
 }
+
