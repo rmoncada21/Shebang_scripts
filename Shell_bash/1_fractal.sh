@@ -1,17 +1,20 @@
 #!/bin/bash
-# N=5
-# filas=$(((2**N) - 1))
-# echo "filas=$filas"
+N=5
+
 filas=63
 columnas=100
 
-# Usando arreglos asociativos
-arreglo=()
-asociativo=()
+asociativo_32=()
+asociativo_16=()
+asociativo_8=()
+asociativo_4=()
+asociativo_2=()
+arreglo_1=()
+arreglo_underscore=()
+where_unos=()
 
 # Funcion para llenar arreglos 
-function llenar_arreglo(){
-    # pasar arreglo por referencia para poder modificarlo
+function llenar_arreglo_underscore(){
     local -n local_arreglo="$1"
 
     for ((i=0; i<$columnas; i++)); do
@@ -19,17 +22,13 @@ function llenar_arreglo(){
     done
 }
 
-# Imprimir "arreglo"
-# echo "Imprimir arreglo"
-# llenar_arreglo arreglo
-# echo "${arreglo[*]}"
-
 # Función para llenar el arreglo asociativo
 function llenar_arreglo_asociativo(){
     local -n local_arreglo_aso="$1"
     local -n local_arreglo="$2"
+    local    local_filas="$3"
 
-    for ((i=0; i<$filas; i++)); do
+    for ((i=0; i<$local_filas; i++)); do
         local_arreglo_aso+=([$i]="${local_arreglo[@]}")
     done        
 }
@@ -41,20 +40,8 @@ function print_arreglo_asociativo(){
     for item in "${local_arreglo_aso[@]}"; do
         echo "$item"
     done
-
-    # for (( item="${#local_arreglo_aso[@]}"; item>=0; item++)); do
-    #     echo "${local_arreglo_aso[$item]}"
-    # done
 }
 
-# Imprimir "arreglo_asociativo"
-# echo "Sección de arreglos asociativos"
-# llenar_arreglo_asociativo asociativo arreglo
-# echo
-# print_arreglo_asociativo asociativo
-
-
-# Función para quitar los espacios en blanco dentro de los arreglos
 function remove_whitespace(){
     local -n local_arreglo_aso="$1"
 
@@ -65,101 +52,101 @@ function remove_whitespace(){
     done
 }
 
-# remove_whitespace asociativo
-# print_arreglo_asociativo asociatio
+function get_unos(){
+    local -n local_get_unos="$1"
+    # inicilizar arreglo en nulo
+    where_unos=()
 
-# TODO: implement function logic to make a tree pattern
-function tree_pattern(){
-    local -n local_arreglo_aso="$1"
-}
-
-function _count_tree(){
-    local -n local_filas="$1"
-    contador=1;
-
-    while (( contador < local_filas )); do
-        # echo "$contador"
-        contador=$(echo "$contador*2" | bc)
-        arreglo_contador+=($contador)
+    for (( i=0; i<"${#local_get_unos[@]}"; i++)); do
+        if [ "${local_get_unos[$i]}" == "1" ]; then
+            where_unos+=("$i")
+        fi
     done
-
-    # echo " contador = $contador"
 }
 
-_count_tree filas
-echo "${arreglo_contador[@]}"
+function count_filas(){
+    # echo "count_filas"
+    local -n local_arreglo_count="$1"
 
+    for item in "${!local_arreglo_count[@]}"; do
+        echo "$item"
+    done
+}
 
 function _draw_vertical_ones(){
-    local -n local_arreglo_aso1="$1"
-    local -n local_arreglo_count="$2"
-    # echo "${local_arreglo_count[0]}"
-    # index_izq=49
-    # indez_der=51
+    echo "draw_vertical_ones"
     
-    # for para hacer/ver la cantidad de árboles
-    for (( a="${#local_arreglo_count[@]} - 2"; a>=0 ; a-- )); do
-        echo "valor de la letra a= $a"
-        
-        # ver la altura del arbol
-        altura_arbol=(${local_arreglo_count[$a]})
-        echo "altura: $altura_arbol"
+    # arreglos locales
+    local -n local_arreglo_aso1="$1"
+    local -n local_arreglo_index1="$2"
 
-        # ver los limites de dibujo
-        limite_superior=(${local_arreglo_count[$a+1]})
-        echo "limite superior: $limite_superior"
-        limite_inferior=$(( local_arreglo_count[a+1] - $altura_arbol ))
-        echo "limite inferior: $limite_inferior"
-        limite_medio=$(( limite_superior - (altura_arbol / 2) - 1 ))
-        echo "limite medio: $limite_medio"
+    # obtener el numero de filas del arreglo
+    numero_filas_string=$(echo $(count_filas local_arreglo_aso1))
+    # convertir numero de filas de string a entero
+    arreglo_numero_filas_entero=( ${numero_filas_string[@]} )
+    # obtener el tamaño del arreglo
+    altura_arreglo_size=${#arreglo_numero_filas_entero[@]}
 
-        # local_arreglo_temp1=(${local_arreglo_aso1[$a]})
-        n=0;
-        for (( b=$filas -1 ; b>=0; b-- )); do     
-            local_arreglo_temp1=(${local_arreglo_aso1[$b]})
+    # limites
+    local_limite_superior=$(( ${#arreglo_numero_filas_entero[@]} - 1 ))
+    echo "local_limite_superior: $local_limite_superior"
+    local_limite_medio=$(( local_limite_superior / 2 ))
+    echo "local_limite_medio: $local_limite_superior"
+    local_limite_inferior=0
+    echo "local_limite_inferior: $local_limite_inferior"
 
-            # dibujar unos verticales
-            if (( $b >= $limite_medio && $b < $limite_superior )); then
-                echo "valor de la letra b: $b"
-                local_arreglo_temp1[49]="1"
-                local_arreglo_aso1[$b]="${local_arreglo_temp1[@]}"
+    # bucle para dibujar la cantidad de lineas
+    for (( a=0; a<${#local_arreglo_index1[@]}; a++ )); do
+        # echo "numero de indices: ${#local_arreglo_index1[@]}"
+        local_indice=${local_arreglo_index1[$a]}
 
-            # dibujar unos horizontales
-            elif (( $b < $limite_medio && $b > $limite_inferior)); then
-                echo "valor de la letra b elif: $b"
-                index_izq=$(( b + 3 ))
-                (( index_izq-- ))
-                echo "index_izq: $index_izq"
-                local_arreglo_temp1[$index_izq]="1"
-                local_arreglo_aso1[$b]="${local_arreglo_temp1[@]}"
+        # bucle para dibujar lineas verticales
+        for (( i=altura_arreglo_size-1; i>=0; i-- )); do
+            # obtener el arreglo dentro del arreglo
+            local_arreglo_temp=(${local_arreglo_aso1[$i]})
+            # echo "${local_arreglo_temp[@]}"
 
-                index_der=$(( b + 2*n + 3))
-                (( index_der++ ))
-                (( n++ ))
-                echo "index_der: $index_der"
-                local_arreglo_temp1[$index_der]="1"
-                local_arreglo_aso1[$b]="${local_arreglo_temp1[@]}"
+            if (( $i <= $local_limite_superior && $i > $local_limite_medio )); then
+                local_arreglo_temp[local_indice]="1"
+                local_arreglo_aso1[$i]="${local_arreglo_temp[@]}"
             fi
         done
-    
     done
+
 }
 
 function _draw_horizontal_ones(){
-    local -n local_arreglo_aso2="$1"   
-    local -n local_arreglo_count2="$2"
-
-    for ((c="${#local_arreglo_count2}"; c>=0; c-- )); do
-        echo
-    done
+    echo
 }
 
-llenar_arreglo arreglo
-llenar_arreglo_asociativo asociativo arreglo
-# _count_tree filas
-# echo "${arreglo_contador[@]}"
+function _draw_ones(){
+    echo "draw_ones"
+    # arreglos locales
+    local -n local_arreglo_aso="$1"
+    local -n local_arreglo_index="$2"
 
-_draw_vertical_ones asociativo arreglo_contador
-# echo "${asociativo[63]}"
-# print_arreglo_asociativo asociativo
-remove_whitespace asociativo
+    # ver los limites de dibujo
+    limite_superior=$(( ${local_}))
+    limite_medio=
+    limite_inferior="0"
+
+    _draw_vertical_ones local_arreglo_aso local_arreglo_index
+}
+
+# ubicación del primer indice
+where_unos_inicio=(49)
+
+llenar_arreglo_underscore arreglo_underscore
+llenar_arreglo_asociativo asociativo_32 arreglo_underscore 32
+# print_arreglo_asociativo asociativo_32
+# remove_whitespace asociativo_32
+
+# test_arreglo=(_ _ _ _ 1 1 1 _ 1 _)
+get_unos test_arreglo
+# echo "${#test_arreglo[@]}"
+# echo "${where_unos[@]}"
+
+# _draw_vertical_ones asociativo_32 where_unos_inicio
+_draw_ones asociativo_32 where_unos_inicio
+# print_arreglo_asociativo asociativo_32 
+remove_whitespace asociativo_32
