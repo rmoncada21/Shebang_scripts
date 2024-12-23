@@ -8,3 +8,8 @@
 ## 2
 
 ![alt text](img/2_cut.png)
+
+
+## 3
+
+![alt text](img/3_cut.png)
