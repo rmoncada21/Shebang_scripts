@@ -28,3 +28,8 @@
 ## 6
 
 ![alt text](img/6_cut.png)
+
+
+## 7
+
+![alt text](img/7_cut.png)
