@@ -13,3 +13,8 @@
 ## 3
 
 ![alt text](img/3_cut.png)
+
+
+## 4 
+
+![alt text](img/4_cut.png)
