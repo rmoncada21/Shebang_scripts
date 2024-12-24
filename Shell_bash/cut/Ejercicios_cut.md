@@ -33,3 +33,8 @@
 ## 7
 
 ![alt text](img/7_cut.png)
+
+
+## 8
+
+![alt text](img/8_cut.png)
