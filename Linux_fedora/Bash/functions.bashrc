@@ -90,7 +90,7 @@ _foxit_autocomplete() {
     local cur="${COMP_WORDS[COMP_CWORD]}" # Lo que el usuario ha escrito hasta el momento
 
     # Lista de opciones para el autocomplementado
-    local options="arquitectura sistemas_digitales sistemas_digitales_verilog sistemas_digitales_systemverilog vlsi verificacion_funcional verilog systemverilog comunicaciones_electricas programacion"
+    local options="'--help' arquitectura sistemas_digitales sistemas_digitales_verilog sistemas_digitales_systemverilog vlsi verificacion_funcional verilog systemverilog comunicaciones_electricas programacion"
 
     # Generar las posibles sugerencias
     COMPREPLY=( $(compgen -W "${options}" -- "${cur}") )
@@ -99,61 +99,140 @@ _foxit_autocomplete() {
 # Registra la función de autocompletado para el comando foxit
 complete -F _foxit_autocomplete foxit
 
+foxit() {
+    local variable="$1"
 
-foxit(){
-        local variable="$1"
+    local session_arquitectura="$HOME/.bashrc.d/.foxit_session/.foxit_session_arquitectura.txt"
+    local session_sistemas_digitales="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales.txt"
+    local session_vlsi="$HOME/.bashrc.d/.foxit_session/.foxit_session_vlsi.txt"
+    local session_verificacion_funcional="$HOME/.bashrc.d/.foxit_session/.foxit_session_verificacion_funcional.txt"
+    local session_verilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_verilog.txt"
+    local session_systemverilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_systemverilog.txt"
+    local session_sistemas_digitales_systemverilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales_systemverilog.txt"
+    local session_sistemas_digitales_verilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales_verilog.txt"
+    local session_comunicaciones_electricas="$HOME/.bashrc.d/.foxit_session/.foxit_session_comunicaciones_electricas.txt"
+    local session_programacion="$HOME/.bashrc.d/.foxit_session/.foxit_session_programacion.txt"
 
-        local session_arquitectura="$HOME/.bashrc.d/.foxit_session/.foxit_session_arquitectura.txt"
-        local session_sistemas_digitales="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales.txt"
-        local session_vlsi="$HOME/.bashrc.d/.foxit_session/.foxit_session_vlsi.txt"
-        local session_verificacion_funcional="$HOME/.bashrc.d/.foxit_session/.foxit_session_verificacion_funcional.txt"
-        local session_verilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_verilog.txt"
-        local session_systemverilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_systemverilog.txt"
-        local session_sistemas_digitales_systemverilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales_systemverilog.txt"
-        local session_sistemas_digitales_verilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales_verilog.txt"
-        local session_comunicaciones_electricas="$HOME/.bashrc.d/.foxit_session/.foxit_session_comunicaciones_electricas.txt"
-        local session_programacion="$HOME/.bashrc.d/.foxit_session/.foxit_session_programacion.txt"
-
-        case $variable in
-                arquitectura)
-                        _foxit_open_txt "$session_arquitectura"
-                        ;;
-                sistemas_digitales)
-                        _foxit_open_txt "$session_sistemas_digitales"
-                        ;;
-                sistemas_digitales_verilog)
-                        _foxit_open_txt "$session_sistemas_digitales_verilog"
-                        ;;
-                sistemas_digitales_systemverilog)
-                        _foxit_open_txt "$session_sistemas_digitales_systemverilog"
-                        ;;
-                verificacion_funcional)
-                        _foxit_open_txt "$session_verificacion_funcional"
-                        ;;
-                verilog)
-                        _foxit_open_txt "$session_verilog"
-                        # eval $(echo -e "nohup $_foxit_open_txt $session_verilog &")
-                        ;;
-                systemverilog)
-                        _foxit_open_txt "$session_systemverilog"
-                        # eval $(echo -e "nohup $_foxit_open_txt $session_verilog &")
-                        ;;
-                vlsi)
-                        _foxit_open_txt "$session_vlsi"
-                        ;;
-                comunicaciones_electricas)
-                        _foxit_open_txt "$session_comunicaciones_electricas"
-                        ;;
-                programacion)
-                        _foxit_open_txt "$session_programacion"
-                        ;;
-                "")
-                        _foxit_alias
-                        ;;
-                *)      
-                        ;;
-        esac
+    # Función de ayuda
+    _foxit_help() {
+        echo "Uso: foxit [opción]"
+        echo ""
+        echo "Opciones disponibles:"
+        echo "  arquitectura                     → Abre la sesión de Arquitectura: PDFs sobre arquitectura de computadoras."
+        echo "  sistemas_digitales               → Abre la sesión de Sistemas Digitales: PDFs sobre diseño de sistemas digitales en Verilog y SystemVerilog."
+        echo "  sistemas_digitales_verilog       → Abre la sesión de Sistemas Digitales con Verilog: PDFs sobre diseño de sistemas digitales utilizando Verilog."
+        echo "  sistemas_digitales_systemverilog → Abre la sesión de Sistemas Digitales con SystemVerilog: PDFs sobre diseño de sistemas digitales utilizando SystemVerilog."
+        echo "  verificacion_funcional           → Abre la sesión de Verificación Funcional: PDFs sobre verificación funcional en SystemVerilog y UVM."
+        echo "  verilog                          → Abre la sesión de Verilog: PDFs sobre el lenguaje de descripción de hardware Verilog HDL."
+        echo "  systemverilog                    → Abre la sesión de SystemVerilog: PDFs sobre diseño y verificación de sistemas digitales con SystemVerilog."
+        echo "  vlsi                             → Abre la sesión de VLSI: PDFs sobre diseño de circuitos integrados de muy alta escala de integración (VLSI)."
+        echo "  comunicaciones_electricas        → Abre la sesión de Comunicaciones Eléctricas: PDFs sobre comunicaciones eléctricas."
+        echo "  programacion                     → Abre la sesión de Programación: PDFs sobre lenguajes de programación como C, C++, entre otros."
+        echo ""
+        echo "  --help                           → Muestra este mensaje de ayuda."
 }
+
+
+    case $variable in
+        --help)
+            _foxit_help
+            return 0
+            ;;
+        arquitectura)
+            _foxit_open_txt "$session_arquitectura"
+            ;;
+        sistemas_digitales)
+            _foxit_open_txt "$session_sistemas_digitales"
+            ;;
+        sistemas_digitales_verilog)
+            _foxit_open_txt "$session_sistemas_digitales_verilog"
+            ;;
+        sistemas_digitales_systemverilog)
+            _foxit_open_txt "$session_sistemas_digitales_systemverilog"
+            ;;
+        verificacion_funcional)
+            _foxit_open_txt "$session_verificacion_funcional"
+            ;;
+        verilog)
+            _foxit_open_txt "$session_verilog"
+            ;;
+        systemverilog)
+            _foxit_open_txt "$session_systemverilog"
+            ;;
+        vlsi)
+            _foxit_open_txt "$session_vlsi"
+            ;;
+        comunicaciones_electricas)
+            _foxit_open_txt "$session_comunicaciones_electricas"
+            ;;
+        programacion)
+            _foxit_open_txt "$session_programacion"
+            ;;
+        "")
+            _foxit_alias
+            ;;
+        *)
+            echo "Error: Opción no válida. Usa 'foxit --help' para ver las opciones disponibles."
+            return 1
+            ;;
+    esac
+}
+
+
+# foxit(){
+#         local variable="$1"
+
+#         local session_arquitectura="$HOME/.bashrc.d/.foxit_session/.foxit_session_arquitectura.txt"
+#         local session_sistemas_digitales="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales.txt"
+#         local session_vlsi="$HOME/.bashrc.d/.foxit_session/.foxit_session_vlsi.txt"
+#         local session_verificacion_funcional="$HOME/.bashrc.d/.foxit_session/.foxit_session_verificacion_funcional.txt"
+#         local session_verilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_verilog.txt"
+#         local session_systemverilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_systemverilog.txt"
+#         local session_sistemas_digitales_systemverilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales_systemverilog.txt"
+#         local session_sistemas_digitales_verilog="$HOME/.bashrc.d/.foxit_session/.foxit_session_sistemas_digitales_verilog.txt"
+#         local session_comunicaciones_electricas="$HOME/.bashrc.d/.foxit_session/.foxit_session_comunicaciones_electricas.txt"
+#         local session_programacion="$HOME/.bashrc.d/.foxit_session/.foxit_session_programacion.txt"
+
+#         case $variable in
+#                 arquitectura)
+#                         _foxit_open_txt "$session_arquitectura"
+#                         ;;
+#                 sistemas_digitales)
+#                         _foxit_open_txt "$session_sistemas_digitales"
+#                         ;;
+#                 sistemas_digitales_verilog)
+#                         _foxit_open_txt "$session_sistemas_digitales_verilog"
+#                         ;;
+#                 sistemas_digitales_systemverilog)
+#                         _foxit_open_txt "$session_sistemas_digitales_systemverilog"
+#                         ;;
+#                 verificacion_funcional)
+#                         _foxit_open_txt "$session_verificacion_funcional"
+#                         ;;
+#                 verilog)
+#                         _foxit_open_txt "$session_verilog"
+#                         # eval $(echo -e "nohup $_foxit_open_txt $session_verilog &")
+#                         ;;
+#                 systemverilog)
+#                         _foxit_open_txt "$session_systemverilog"
+#                         # eval $(echo -e "nohup $_foxit_open_txt $session_verilog &")
+#                         ;;
+#                 vlsi)
+#                         _foxit_open_txt "$session_vlsi"
+#                         ;;
+#                 comunicaciones_electricas)
+#                         _foxit_open_txt "$session_comunicaciones_electricas"
+#                         ;;
+#                 programacion)
+#                         _foxit_open_txt "$session_programacion"
+#                         ;;
+#                 "")
+#                         _foxit_alias
+#                         ;;
+#                 *)      
+#                         ;;
+#         esac
+# }
 
 ############################################### funciones para okular ###############################################
 
@@ -279,3 +358,40 @@ lumos_monitor(){
                         ;;
         esac
 }
+
+
+# Definimos una función genérica para manejar todos los alias de carpetas
+
+# wine_exe(){
+#         #local wine_stderr=$(cat ~/.bashrc.d/.bashrc_wine_stderr.txt)
+        
+#         local foxit_exe="$HOME/.wine/drive_c/Program Files (x86)/Foxit Software/Foxit PDF Reader/FoxitPDFReader.exe"
+#         local office_exe="" # Completar cuando se instale Office
+#         local ltspice_exe="" # Completar cuando se instale LTSpice
+
+#         # Variable para el comando de entrada
+#         local exe="$1"
+
+#         case "$exe" in
+#                 foxit)
+#                         wine "$foxit_exe"
+#                         ;;
+#                 office)
+#                         # Añadir el comando para ejecutar Office cuando esté disponible
+#                         echo "wine office"
+#                         ;;
+#                 ltspice)
+#                         # Añadir el comando para ejecutar Office cuando esté disponible
+#                         echo "wine ltsice"
+#                         ;;
+#                 "")
+#                         # eval $(wine $(2>&1) | grep -E '^(wine|fixme|err):' )
+#                         # "$wine_stderr"
+#                         echo "Error: No se especificó ningún programa a ejecutar."
+#                         echo "Uso: winexe [foxit|office|ltspice]"
+#                         ;;
+#                 *)
+#                         echo "Comando no reconocido: $exe"
+#                         ;;
+#         esac
+# }
