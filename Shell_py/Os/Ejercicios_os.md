@@ -1,4 +1,9 @@
 # Ejercicios Python Scripting: module - os
 > https://www.w3resource.com/python-exercises/os/index.php
 
-## 1 Escriba un programa en Python para obtener el nombre del sistema operativo (independiente de la plataforma), información del sistema operativo actual, directorio de trabajo actual, imprimir archivos y directorios en el directorio actual y generar errores si la ruta o el nombre del archivo no son válidos.
+## 1. OS Info and Directory Listing
+
+### Write a Python program to get the name of the operating system (Platform independent), information of the current operating system, current working directory, print files and directories in the current directory, and raise errors if the path or file name is invalid.
+
+## 2. List Directories and Files. 
+### Write a Python program to list only directories, files and all directories, files in a specified path.
