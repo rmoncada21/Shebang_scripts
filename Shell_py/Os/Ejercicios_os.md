@@ -7,3 +7,6 @@
 
 ## 2. List Directories and Files. 
 ### Write a Python program to list only directories, files and all directories, files in a specified path.
+
+## 4. Path Access Checker
+### Write a Python program to check access to a specified path. Test the existence, readability, writability and executability of the specified path.
