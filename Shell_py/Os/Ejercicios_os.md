@@ -10,3 +10,6 @@
 
 ## 4. Path Access Checker
 ### Write a Python program to check access to a specified path. Test the existence, readability, writability and executability of the specified path.
+
+## 5. File Metadata Fetcher
+### Write a Python program to get the size, permissions, owner, device, created, last modified and last accessed date and time of a specified path.
