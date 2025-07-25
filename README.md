@@ -8,7 +8,7 @@ El **shebang** es la primera línea de un script que define el **intérprete** q
 
 ### **Ejemplos de shebang en diferentes lenguajes**:
 
-- **Shell (Bash)**: `#!/bin/bash`
+- **Shell (Bash)**: `#!/bin/bash` ó `#!/usr/bin/env bash`
 - **Shell (Dash)**: `#!/bin/dash`
 - **Shell (POSIX)**: `#!/bin/sh`
 - **Shell (Zsh)**: `#!/bin/zsh`
