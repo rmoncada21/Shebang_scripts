@@ -108,7 +108,7 @@ sanitize(){
 # valgrind -v --tool=memcheck ./bin/ejecutable # v =verbose
 _valgrind_autocomplete(){
     local cur="${COMP_WORDS[COMP_CWORD]}"
-    local options0=" '-help' 'memcheck' 'heldgrind' "
+    local options0=" '-help' 'memcheck' 'helgrind' "
     local options1=$(find bin/ -type f -printf "%f\n")
     local options=( "${options0[@]}" "${options1[@]}" )
 
